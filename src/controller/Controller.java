@@ -109,7 +109,7 @@ public class Controller {
 			throw new NullPointerException("null values");
 		}
 		//LINK FRA PN TIL ORDINATION FOR DATO, - Implementering fra abstrakt
-		if (dato.isBefore(ordination.getStart))
+		if (dato.isBefore(ordination.))
 	}
 
 	/**

@@ -58,4 +58,8 @@ public class PN extends Ordination {
     public double getAntalEnheder() {
         return antalEnheder;
     }
+
+    public List getDatoer() {
+        return datoer;
+    }
 }
