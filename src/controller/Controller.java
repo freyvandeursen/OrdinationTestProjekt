@@ -37,12 +37,18 @@ public class Controller {
 	 * Pre: antal >= 0
 	 * @return opretter og returnerer en PN ordination.
 	 */
+
+	//NOTE: Implementering ift PN class
 	public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
 			Patient patient, Laegemiddel laegemiddel, double antal) {
-		if (startDen.isAfter(slutDen)) {
-			
+		if (startDen.isAfter(slutDen)) throw new IllegalArgumentException("Outside range");
+		else if (antal <= 0 || startDen == null || slutDen == null || patient == null || laegemiddel == null) {
+			throw new NullPointerException("Null values");
+	}
+		else {
+			PN pN = new PN();
+			return pN;
 		}
-		return null;
 	}
 
 	/**
@@ -55,8 +61,15 @@ public class Controller {
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			double morgenAntal, double middagAntal, double aftenAntal,
 			double natAntal) {
-		// TODO
-		return null;
+		if (startDen.isAfter(slutDen)) throw new IllegalArgumentException("Outside range");
+		else if (morgenAntal <= 0 || middagAntal <= 0 || aftenAntal <= 0 || natAntal <= 0 ||
+				startDen == null || slutDen == null || patient == null || laegemiddel == null) {
+			throw new NullPointerException("Null values");
+		}
+		else {
+			DagligFast dF = new DagligFast();
+			return dF;
+		}
 	}
 
 	/**
@@ -70,9 +83,19 @@ public class Controller {
 	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			LocalTime[] klokkeSlet, double[] antalEnheder) {
-		// TODO
-		return null;
-	}
+		if (startDen.isAfter(slutDen) || antalEnheder.length != klokkeSlet.length)
+			throw new IllegalArgumentException("Outside range");
+		else if (startDen == null || slutDen == null || patient == null || laegemiddel == null) {
+			throw new NullPointerException("Null values");
+		}
+		for (int j = 0; j < antalEnheder.length; j++) {
+			if (antalEnheder[j] == 0)
+				throw new IllegalArgumentException("Manglende value i enheder");
+		}
+		//når hertil hvis der ikke rammes breaks fra exceptions
+			DagligSkaev dS = new DagligSkaev();
+			return dS;
+		}
 
 	/**
 	 * En dato for hvornår ordinationen anvendes tilføjes ordinationen. Hvis
@@ -81,7 +104,11 @@ public class Controller {
 	 * Pre: ordination og dato er ikke null
 	 */
 	public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
-		// TODO
+		if (ordination == null || dato == null) {
+			throw new NullPointerException("null values");
+		}
+		//LINK FRA PN TIL ORDINATION FOR DATO, - Implementering fra abstrakt
+		if (dato.isBefore(ordination.getStart))
 	}
 
 	/**
@@ -90,9 +117,20 @@ public class Controller {
 	 * anvendes, og den er afhængig af patientens vægt.
 	 * Pre: patient og lægemiddel er ikke null
 	 */
+
+	//OBS? Type enhed ml, enhed etc.??
 	public double anbefaletDosisPrDoegn(Patient patient, Laegemiddel laegemiddel) {
-		//TODO
-		return 0;
+		if (patient == null || laegemiddel == null) {
+			throw new NullPointerException("null values");
+		}
+		if (patient.getVaegt() < 25) {
+			return laegemiddel.getEnhedPrKgPrDoegnLet() * patient.getVaegt();
+		}
+		else if (patient.getVaegt() > 25 && patient.getVaegt() < 120) {
+			return laegemiddel.getEnhedPrKgPrDoegnNormal() * patient.getVaegt();
+		}
+		else
+		return laegemiddel.getEnhedPrKgPrDoegnTung() * patient.getVaegt();
 	}
 
 	/**
