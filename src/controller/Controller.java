@@ -47,7 +47,6 @@ public class Controller {
 			patient.addOrdination(pN);
 			return pN;
 		}
-		//new
 	}
 
 	/**
@@ -107,8 +106,8 @@ public class Controller {
 			throw new NullPointerException("null values");
 		}
 		//LINK FRA PN TIL ORDINATION FOR DATO, - Implementering fra abstrakt
-		if (dato.isBefore((LocalDate) ordination.getDatoer().get(0)) ||
-				dato.isAfter((LocalDate) ordination.getDatoer().get(ordination.getDatoer().size() - 1))) {
+		if (dato.isBefore(ordination.getStartDen()) ||
+				dato.isAfter(ordination.getSlutDen())) {
 			throw new IllegalArgumentException("Dato out of bounds");
 		}
 	}
