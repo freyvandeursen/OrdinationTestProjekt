@@ -6,6 +6,7 @@ public class Patient {
     private double vaegt;
 
     // TODO: Link til Ordination
+    private Ordination ordination;
 
     public Patient(String cprnr, String navn, double vaegt) {
         this.cprnr = cprnr;
@@ -39,5 +40,4 @@ public class Patient {
     public String toString(){
         return navn + "  " + cprnr;
     }
-
 }

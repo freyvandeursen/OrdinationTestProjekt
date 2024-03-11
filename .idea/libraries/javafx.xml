@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="javafx">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Skrivebord/javafx/javafx-sdk-19.0.2.1/lib/javafx.base.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Skrivebord/javafx/javafx-sdk-19.0.2.1/lib/javafx.controls.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Skrivebord/javafx/javafx-sdk-19.0.2.1/lib/javafx.graphics.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../Skrivebord/javafx/javafx-19.0.2.1-javadoc/javafx.base" />
+      <root url="file://$PROJECT_DIR$/../Skrivebord/javafx/javafx-19.0.2.1-javadoc/javafx.controls" />
+      <root url="file://$PROJECT_DIR$/../Skrivebord/javafx/javafx-19.0.2.1-javadoc/javafx.graphics" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

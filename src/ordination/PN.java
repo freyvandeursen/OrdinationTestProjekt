@@ -41,5 +41,4 @@ public class PN {
     public double getAntalEnheder() {
         return antalEnheder;
     }
-
 }
