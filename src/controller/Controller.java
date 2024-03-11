@@ -5,11 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import ordination.DagligFast;
-import ordination.DagligSkaev;
-import ordination.Laegemiddel;
-import ordination.PN;
-import ordination.Patient;
+import ordination.*;
 import storage.Storage;
 
 public class Controller {
@@ -47,7 +43,8 @@ public class Controller {
 			throw new NullPointerException("Null values");
 	}
 		else {
-			PN pN = new PN();
+			PN pN = new PN(startDen, slutDen, laegemiddel, antal);
+			patient.addOrdination(pN);
 			return pN;
 		}
 		//new
@@ -148,12 +145,13 @@ public class Controller {
 		if (laegemiddel == null) {
 			throw new NullPointerException("Laegemiddel null");
 		}
+		int count = 0;
 		for (Patient patient : storage.getAllPatienter()) {
 			if (patient.getVaegt() > vægtStart && patient.getVaegt() < vægtSlut) {
-				for (Ordination ordination : )
+				count += patient.getOrdinationer().size();
 			}
 		}
-		return 0;
+		return count;
 	}
 
 	public List<Patient> getAllPatienter() {

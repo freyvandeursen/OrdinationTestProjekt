@@ -40,6 +40,12 @@ public class Patient {
         return ordinationer;
     }
 
+    public void addOrdination(Ordination ordination) {
+        if (ordination != null) {
+            ordinationer.add(ordination);
+        }
+    }
+
     //TODO: Metoder (med specifikation) til at vedligeholde link til Ordination
 
     @Override
