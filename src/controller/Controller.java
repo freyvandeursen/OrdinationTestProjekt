@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import ordination.DagligFast;
@@ -109,7 +110,10 @@ public class Controller {
 			throw new NullPointerException("null values");
 		}
 		//LINK FRA PN TIL ORDINATION FOR DATO, - Implementering fra abstrakt
-		if (dato.isBefore(ordination.))
+		if (dato.isBefore((LocalDate) ordination.getDatoer().get(0)) ||
+				dato.isAfter((LocalDate) ordination.getDatoer().get(ordination.getDatoer().size() - 1))) {
+			throw new IllegalArgumentException("Dato out of bounds");
+		}
 	}
 
 	/**
@@ -141,7 +145,14 @@ public class Controller {
 	 */
 	public int antalOrdinationerPrVægtPrLægemiddel(double vægtStart,
 			double vægtSlut, Laegemiddel laegemiddel) {
-		// TODO
+		if (laegemiddel == null) {
+			throw new NullPointerException("Laegemiddel null");
+		}
+		for (Patient patient : storage.getAllPatienter()) {
+			if (patient.getVaegt() > vægtStart && patient.getVaegt() < vægtSlut) {
+				for (Ordination ordination : )
+			}
+		}
 		return 0;
 	}
 
