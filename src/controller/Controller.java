@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Slider;
 import ordination.*;
 import storage.Storage;
 
@@ -38,15 +39,21 @@ public class Controller {
 	//NOTE: Implementering ift PN class
 	public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
 			Patient patient, Laegemiddel laegemiddel, double antal) {
-		if (startDen.isAfter(slutDen)) throw new IllegalArgumentException("Outside range");
-		else if (antal <= 0 || startDen == null || slutDen == null || patient == null || laegemiddel == null) {
-			throw new NullPointerException("Null values");
-	}
-		else {
-			PN pN = new PN(startDen, slutDen, laegemiddel, antal);
-			patient.addOrdination(pN);
-			return pN;
+
+		if (antal <= 0 || startDen == null || slutDen == null || patient == null || laegemiddel == null) {
+			throw new IllegalArgumentException("Values kan ikke være null");
 		}
+		if (antal < 0) {
+			throw new IllegalArgumentException("Antal skal være et positivt tal");
+		}
+		if (startDen.isAfter(slutDen)) {
+			throw new IllegalArgumentException("Start date kan ikke være efter slutdato");
+		}
+		//Her laves en PN Ordination
+		PN pnOrdination = new PN(startDen, slutDen, laegemiddel, antal);
+		//Her adder vi den givne PN ordination til patientens andre Ordinationer
+		patient.getOrdinationer().add(pnOrdination);
+		return pnOrdination;
 	}
 
 	/**
@@ -60,12 +67,11 @@ public class Controller {
 			double morgenAntal, double middagAntal, double aftenAntal,
 			double natAntal) {
 		if (startDen.isAfter(slutDen)) throw new IllegalArgumentException("Outside range");
-		else if (morgenAntal <= 0 || middagAntal <= 0 || aftenAntal <= 0 || natAntal <= 0 ||
-				startDen == null || slutDen == null || patient == null || laegemiddel == null) {
+		else if (morgenAntal < 0 || middagAntal < 0 || aftenAntal < 0 || natAntal < 0 || startDen == null || slutDen == null || patient == null || laegemiddel == null) {
 			throw new NullPointerException("Null values");
 		}
 		else {
-			DagligFast dF = new DagligFast();
+			DagligFast dF = new DagligFast(startDen, slutDen, laegemiddel);
 			return dF;
 		}
 	}
@@ -91,7 +97,7 @@ public class Controller {
 				throw new IllegalArgumentException("Manglende value i enheder");
 		}
 		//når hertil hvis der ikke rammes breaks fra exceptions
-			DagligSkaev dS = new DagligSkaev();
+			DagligSkaev dS = new DagligSkaev(startDen,slutDen,laegemiddel);
 			return dS;
 		}
 
