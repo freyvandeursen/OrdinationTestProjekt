@@ -7,28 +7,32 @@ import java.util.List;
 
 public class DagligSkaev extends Ordination {
     // TODO
-    private ArrayList<Dosis> dosisList = new ArrayList<>();
+    private ArrayList<Dosis> doser;
 
     public DagligSkaev(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel) {
         super(startDen, slutDen, laegemiddel);
-        this.dosisList = new ArrayList<>();
+        this.doser = new ArrayList<>();
     }
 
     public void opretDosis(LocalTime tid, double antal) {
         // TODO
         Dosis dosis = new Dosis(tid,antal);
-        dosisList.add(dosis);
+        doser.add(dosis);
     }
 
     @Override
     public double samletDosis() {
-        return 0;
+        double samletDosis = 0;
+        for (Dosis dosis : doser) {
+            samletDosis += dosis.getAntal();
+        }
+        return samletDosis;
     }
 
     @Override
     public double doegnDosis() {
-        double antalDoser = dosisList.size();
-        return 0;
+        double antalDoser = doser.size();
+        return antalDoser;
     }
 
     @Override
@@ -37,6 +41,6 @@ public class DagligSkaev extends Ordination {
     }
 
     public ArrayList<Dosis> getDoser() {
-        return dosisList;
+        return doser;
     }
 }

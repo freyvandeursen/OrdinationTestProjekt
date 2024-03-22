@@ -72,7 +72,9 @@ public class Controller {
 		}
 		else {
 			DagligFast dF = new DagligFast(startDen, slutDen, laegemiddel);
+			patient.addOrdination(dF);
 			return dF;
+
 		}
 	}
 
@@ -87,17 +89,19 @@ public class Controller {
 	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			LocalTime[] klokkeSlet, double[] antalEnheder) {
-		if (startDen.isAfter(slutDen) || antalEnheder.length != klokkeSlet.length)
+		if (startDen.isAfter(slutDen))
 			throw new IllegalArgumentException("Outside range");
 		else if (startDen == null || slutDen == null || patient == null || laegemiddel == null) {
 			throw new NullPointerException("Null values");
 		}
-		for (int j = 0; j < antalEnheder.length; j++) {
-			if (antalEnheder[j] == 0)
+			if (antalEnheder.length < klokkeSlet.length) {
 				throw new IllegalArgumentException("Manglende value i enheder");
-		}
-		//når hertil hvis der ikke rammes breaks fra exceptions
+		} else if (antalEnheder.length > klokkeSlet.length) {
+				throw new IllegalArgumentException("Manglende klokkeslet");
+			}
+			//når hertil hvis der ikke rammes breaks fra exceptions
 			DagligSkaev dS = new DagligSkaev(startDen,slutDen,laegemiddel);
+			patient.addOrdination(dS);
 			return dS;
 		}
 
@@ -116,6 +120,7 @@ public class Controller {
 				dato.isAfter(ordination.getSlutDen())) {
 			throw new IllegalArgumentException("Dato out of bounds");
 		}
+		ordination.addAnvendelse(dato);
 	}
 
 	/**
@@ -133,7 +138,7 @@ public class Controller {
 		if (patient.getVaegt() < 25) {
 			return laegemiddel.getEnhedPrKgPrDoegnLet() * patient.getVaegt();
 		}
-		else if (patient.getVaegt() > 25 && patient.getVaegt() < 120) {
+		else if (patient.getVaegt() >= 25 && patient.getVaegt() <= 120) {
 			return laegemiddel.getEnhedPrKgPrDoegnNormal() * patient.getVaegt();
 		}
 		else
@@ -240,5 +245,7 @@ public class Controller {
 				LocalDate.of(2021, 1, 24), storage.getAllPatienter().get(1),
 				storage.getAllLaegemidler().get(2), kl, an);
 	}
+
+
 
 }

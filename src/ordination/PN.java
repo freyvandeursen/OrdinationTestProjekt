@@ -7,11 +7,13 @@ import java.util.List;
 public class PN extends Ordination {
 
     private double antalEnheder;
-    private List datoer = new ArrayList<>();
+    private List<LocalDate> datoer;
+    private boolean givet;
 
     public PN(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel, Double antalEnhed) {
         super(startDen, slutDen, laegemiddel);
         antalEnheder = antalEnhed;
+        this.datoer = new ArrayList<>();
     }
 
     /**
@@ -26,9 +28,11 @@ public class PN extends Ordination {
         // TODO
         if (givesDen.isAfter(super.getStartDen()) && givesDen.isBefore(super.getSlutDen())) {
             datoer.add(givesDen);
-            return true;
+            givet = true;
+            return givet;
         } else {
-         return false;
+            givet = false;
+         return givet;
         }
     }
 
@@ -62,5 +66,13 @@ public class PN extends Ordination {
 
     public List getDatoer() {
         return datoer;
+    }
+
+    public void addAnvendelse(LocalDate dato) {
+        datoer.add(dato);
+    }
+
+    public Boolean erOrdinationGivet() {
+        return this.givet;
     }
 }
